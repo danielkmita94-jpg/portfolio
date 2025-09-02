@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Daniel Kmita - Full-Stack Developer
 
 ## 🚀 O mnie
@@ -91,3 +92,7 @@ Pasjonat clean code, MVC architecture i responsive design.
 **"Tworzę aplikacje webowe, które łączą funkcjonalność z elegancją"** ✨
 
 *Ostatnia aktualizacja: Wrzesień 2025*
+=======
+# portfolio
+My professional portfolio showcasing web development, game development, and desktop applications.
+>>>>>>> 04383560387900f39f1af8f8ab9c86555d51af05
