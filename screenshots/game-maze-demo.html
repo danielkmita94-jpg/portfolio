@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Maze Game - Portfolio Demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        .portfolio-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+        .tech-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            backdrop-filter: blur(5px);
+        }
+        #game-container {
+            position: relative;
+            background-color: rgba(45, 55, 72, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            margin: 0 auto 2rem;
+            max-width: 700px;
+            max-height: 700px;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        canvas {
+            display: block;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 10px;
+            max-width: 100%;
+            max-height: 100%;
+        }
+        .controls-section {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem auto;
+            max-width: 700px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .control-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 0.75rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            outline: none;
+        }
+        .control-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        .action-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            outline: none;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 0.5rem;
+        }
+        .action-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+        .stats-display {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            backdrop-filter: blur(5px);
+        }
+        .feature-list {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1rem auto;
+            max-width: 700px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .feature-item {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        .feature-icon {
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            color: #667eea;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .hidden {
+            display: none !important;
+        }
+        #message-box {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(45, 55, 72, 0.95);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+            z-index: 100;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(10px);
+        }
+        #info-box {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            backdrop-filter: blur(5px);
+        }
+        #hint-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        @media (max-width: 768px) {
+            .portfolio-header h1 {
+                font-size: 1.8rem;
+            }
+            .tech-stack {
+                gap: 0.5rem;
+            }
+            .tech-badge {
+                font-size: 0.8rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Portfolio Header -->
+    <div class="portfolio-header">
+        <h1 class="text-4xl font-bold mb-4">🎮 Maze Game with AI</h1>
+        <p class="text-xl mb-4">Zaawansowana gra w labirynt zintegrowana z Google Gemini AI</p>
+        
+        <div class="tech-stack">
+            <span class="tech-badge">HTML5</span>
+            <span class="tech-badge">CSS3</span>
+            <span class="tech-badge">JavaScript ES6+</span>
+            <span class="tech-badge">Canvas API</span>
+            <span class="tech-badge">Tailwind CSS</span>
+            <span class="tech-badge">Google Gemini AI</span>
+            <span class="tech-badge">Responsive Design</span>
+        </div>
+        
+        <p class="text-sm opacity-80 mt-4">
+            Projekt demonstrujący umiejętności programowania gier, integracji API oraz tworzenia interaktywnych aplikacji webowych
+        </p>
+    </div>
+
+    <!-- Game Container -->
+    <div id="game-container">
+        <canvas id="gameCanvas" role="img" aria-label="Labirynt gry"></canvas>
+        <div id="info-box">Współrzędne: (<span id="player-x">1</span>, <span id="player-y">1</span>)</div>
+        <div id="message-box" class="hidden">
+            <div id="final-message"></div>
+            <button id="restart-button-in-modal" class="action-button mt-4">Zagraj ponownie</button>
+            <button id="reflection-button" class="action-button mt-4 hidden">Opowiedz o mojej podróży ✨</button>
+        </div>
+    </div>
+
+    <!-- Game Controls -->
+    <div class="controls-section">
+        <div class="stats-display">
+            <div class="grid grid-cols-2 gap-4">
+                <div>🎯 Ruchy: <span id="move-count" class="font-bold">0</span></div>
+                <div>⏱️ Czas: <span id="time-elapsed" class="font-bold">00:00</span></div>
+            </div>
+        </div>
+        
+        <div class="text-center mb-4">
+            <button id="restart-button" class="action-button">🔄 Generuj nowy labirynt</button>
+            <button id="hint-button" class="action-button">💡 Pokaż podpowiedź AI</button>
+        </div>
+        
+        <div id="hint-box" role="status" aria-live="polite"></div>
+
+        <div class="grid grid-cols-3 gap-2 max-w-xs mx-auto">
+            <div></div>
+            <button id="up-button" class="control-button" aria-label="Ruch w górę">
+                <i class="fa-solid fa-arrow-up"></i>
+            </button>
+            <div></div>
+            <button id="left-button" class="control-button" aria-label="Ruch w lewo">
+                <i class="fa-solid fa-arrow-left"></i>
+            </button>
+            <div></div>
+            <button id="right-button" class="control-button" aria-label="Ruch w prawo">
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <div></div>
+            <button id="down-button" class="control-button" aria-label="Ruch w dół">
+                <i class="fa-solid fa-arrow-down"></i>
+            </button>
+            <div></div>
+        </div>
+    </div>
+
+    <!-- Features List -->
+    <div class="feature-list">
+        <h3 class="text-xl font-bold mb-4 text-center">✨ Funkcjonalności projektu</h3>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="feature-item">
+                <i class="fa-solid fa-robot feature-icon"></i>
+                <span>Integracja z Google Gemini AI</span>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-mobile-alt feature-icon"></i>
+                <span>Responsywny design</span>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-keyboard feature-icon"></i>
+                <span>Sterowanie klawiaturą (WASD)</span>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-brain feature-icon"></i>
+                <span>Algorytm generowania labiryntu</span>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-search feature-icon"></i>
+                <span>BFS - rozwiązywanie labiryntu</span>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-chart-line feature-icon"></i>
+                <span>Statystyki gry w czasie rzeczywistym</span>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-universal-access feature-icon"></i>
+                <span>Dostępność (ARIA, keyboard nav)</span>
+            </div>
+            <div class="feature-item">
+                <i class="fa-solid fa-shield-alt feature-icon"></i>
+                <span>Obsługa błędów i timeout</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const canvas = document.getElementById('gameCanvas');
+            const ctx = canvas.getContext('2d');
+            const messageBox = document.getElementById('message-box');
+            const finalMessage = document.getElementById('final-message');
+            const restartButton = document.getElementById('restart-button');
+            const restartButtonInModal = document.getElementById('restart-button-in-modal');
+            const reflectionButton = document.getElementById('reflection-button');
+            const hintButton = document.getElementById('hint-button');
+            const hintBox = document.getElementById('hint-box');
+            const infoBoxX = document.getElementById('player-x');
+            const infoBoxY = document.getElementById('player-y');
+            const moveCountElement = document.getElementById('move-count');
+            const timeElapsedElement = document.getElementById('time-elapsed');
+
+            const upButton = document.getElementById('up-button');
+            const downButton = document.getElementById('down-button');
+            const leftButton = document.getElementById('left-button');
+            const rightButton = document.getElementById('right-button');
+
+            // Game state
+            const gridSize = 41;
+            let tileSize;
+            let maze;
+            let player;
+            let exit;
+            let moveCount = 0;
+            let startTime;
+            let gameTimer;
+            let isGameActive = false;
+
+            // Configuration
+            const CONFIG = {
+                API_TIMEOUT: 10000,
+                MAX_RETRIES: 3,
+                GEMINI_API_KEY: "",
+                GEMINI_API_URL: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent"
+            };
+
+            function resizeCanvas() {
+                const gameContainer = document.getElementById('game-container');
+                const size = Math.min(gameContainer.clientWidth - 40, gameContainer.clientHeight - 40);
+                canvas.width = size;
+                canvas.height = size;
+                tileSize = canvas.width / gridSize;
+                drawGame();
+            }
+
+            function generateMaze() {
+                maze = Array.from({ length: gridSize }, () => Array(gridSize).fill(1));
+
+                function carvePath(x, y) {
+                    const directions = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+                    directions.sort(() => Math.random() - 0.5);
+
+                    maze[y][x] = 0;
+
+                    for (const [dx, dy] of directions) {
+                        const nx = x + dx * 2;
+                        const ny = y + dy * 2;
+
+                        if (ny > 0 && ny < gridSize - 1 && nx > 0 && nx < gridSize - 1 && maze[ny][nx] === 1) {
+                            maze[y + dy][x + dx] = 0;
+                            carvePath(nx, ny);
+                        }
+                    }
+                }
+
+                carvePath(1, 1);
+                
+                player = { x: 1, y: 1 };
+                exit = { x: gridSize - 2, y: gridSize - 2 };
+                
+                if (maze[exit.y][exit.x] === 1) {
+                    maze[exit.y][exit.x] = 0;
+                }
+            }
+
+            function drawMaze() {
+                for (let row = 0; row < gridSize; row++) {
+                    for (let col = 0; col < gridSize; col++) {
+                        if (maze[row][col] === 1) {
+                            ctx.fillStyle = '#4a5568';
+                            ctx.fillRect(col * tileSize, row * tileSize, tileSize, tileSize);
+                        }
+                    }
+                }
+            }
+
+            function drawPlayer() {
+                ctx.fillStyle = '#667eea';
+                ctx.fillRect(player.x * tileSize, player.y * tileSize, tileSize, tileSize);
+            }
+
+            function drawExit() {
+                ctx.fillStyle = '#48bb78';
+                ctx.fillRect(exit.x * tileSize, exit.y * tileSize, tileSize, tileSize);
+            }
+
+            function updateInfoBox() {
+                infoBoxX.textContent = player.x;
+                infoBoxY.textContent = player.y;
+            }
+
+            function clearCanvas() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            function drawGame() {
+                clearCanvas();
+                drawMaze();
+                drawExit(); 
+                drawPlayer();
+                updateInfoBox();
+            }
+
+            function checkCollision(x, y) {
+                if (x < 0 || x >= gridSize || y < 0 || y >= gridSize) {
+                    return true;
+                }
+                return maze[y][x] === 1;
+            }
+            
+            function startGame() {
+                isGameActive = true;
+                startTime = Date.now();
+                moveCount = 0;
+                updateStats();
+                
+                gameTimer = setInterval(() => {
+                    if (isGameActive) {
+                        updateStats();
+                    }
+                }, 1000);
+            }
+
+            function updateStats() {
+                moveCountElement.textContent = moveCount;
+                
+                if (startTime) {
+                    const elapsed = Math.floor((Date.now() - startTime) / 1000);
+                    const minutes = Math.floor(elapsed / 60);
+                    const seconds = elapsed % 60;
+                    timeElapsedElement.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }
+            }
+
+            function movePlayer(direction) {
+                if (!isGameActive) return;
+
+                let newX = player.x;
+                let newY = player.y;
+
+                switch (direction) {
+                    case 'up':
+                        newY--;
+                        break;
+                    case 'down':
+                        newY++;
+                        break;
+                    case 'left':
+                        newX--;
+                        break;
+                    case 'right':
+                        newX++;
+                        break;
+                }
+
+                if (!checkCollision(newX, newY)) {
+                    player.x = newX;
+                    player.y = newY;
+                    moveCount++;
+                    updateStats();
+                    drawGame(); 
+                    
+                    if (player.x === exit.x && player.y === exit.y) {
+                        endGame(true);
+                    }
+                }
+            }
+
+            function endGame(win) {
+                isGameActive = false;
+                clearInterval(gameTimer);
+                
+                if (win) {
+                    finalMessage.textContent = `🎉 Gratulacje! Udało Ci się uciec z labiryntu w ${moveCount} ruchach!`;
+                    reflectionButton.classList.remove('hidden');
+                } else {
+                    reflectionButton.classList.add('hidden');
+                }
+                messageBox.classList.remove('hidden');
+            }
+
+            async function getGeminiResponse(prompt, retries = 0) {
+                if (!CONFIG.GEMINI_API_KEY) {
+                    return "🤖 Funkcja AI jest niedostępna w demo. W pełnej wersji możesz dodać swój klucz API!";
+                }
+
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), CONFIG.API_TIMEOUT);
+
+                try {
+                    const chatHistory = [{ role: "user", parts: [{ text: prompt }] }];
+                    const payload = { contents: chatHistory };
+                    const apiUrl = `${CONFIG.GEMINI_API_URL}?key=${CONFIG.GEMINI_API_KEY}`;
+                    
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload),
+                        signal: controller.signal
+                    });
+
+                    clearTimeout(timeoutId);
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    
+                    if (result.candidates && result.candidates.length > 0 &&
+                        result.candidates[0].content && result.candidates[0].content.parts &&
+                        result.candidates[0].content.parts.length > 0) {
+                        return result.candidates[0].content.parts[0].text;
+                    } else {
+                        throw new Error('Invalid response format');
+                    }
+                } catch (error) {
+                    clearTimeout(timeoutId);
+                    console.error('API Error:', error);
+                    
+                    if (retries < CONFIG.MAX_RETRIES && error.name !== 'AbortError') {
+                        await new Promise(resolve => setTimeout(resolve, 1000 * (retries + 1)));
+                        return getGeminiResponse(prompt, retries + 1);
+                    }
+                    
+                    return "🤖 Przepraszam, nie mogę teraz wygenerować odpowiedzi. Spróbuj ponownie później.";
+                }
+            }
+
+            function solveMaze(start, end) {
+                const q = [{ path: [start], pos: start }];
+                const visited = new Set();
+                visited.add(`${start.x},${start.y}`);
+                const directions = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+
+                while (q.length > 0) {
+                    const { path, pos } = q.shift();
+
+                    if (pos.x === end.x && pos.y === end.y) {
+                        return path;
+                    }
+
+                    for (const [dx, dy] of directions) {
+                        const newX = pos.x + dx;
+                        const newY = pos.y + dy;
+
+                        if (newY >= 0 && newY < gridSize && newX >= 0 && newX < gridSize && 
+                            maze[newY][newX] === 0 && !visited.has(`${newX},${newY}`)) {
+                            visited.add(`${newX},${newY}`);
+                            const newPath = [...path, { x: newX, y: newY }];
+                            q.push({ path: newPath, pos: { x: newX, y: newY } });
+                        }
+                    }
+                }
+                return null;
+            }
+
+            async function getHint() {
+                hintBox.innerHTML = '<div class="loading"></div> Ładowanie podpowiedzi AI...';
+                
+                try {
+                    const path = solveMaze(player, exit);
+                    
+                    if (path && path.length > 1) {
+                        const nextStep = path[1];
+                        let directionText;
+                        if (nextStep.x > player.x) directionText = "w prawo";
+                        else if (nextStep.x < player.x) directionText = "w lewo";
+                        else if (nextStep.y > player.y) directionText = "w dół";
+                        else if (nextStep.y < player.y) directionText = "w górę";
+                        
+                        const prompt = `Jesteś życzliwym duszkiem labiryntu. Daj graczowi krótką, kreatywną i motywującą podpowiedź, jak iść, aby wydostać się z labiryntu. Podpowiedz, aby poszedł ${directionText}. Nie ujawniaj całej ścieżki. Pisz w języku polskim.`;
+                        
+                        const hint = await getGeminiResponse(prompt);
+                        hintBox.textContent = hint;
+                    } else {
+                        hintBox.textContent = "🎯 Ups, chyba już jesteś na mecie!";
+                    }
+                } catch (error) {
+                    hintBox.innerHTML = '<div class="text-red-400">❌ Błąd podczas ładowania podpowiedzi</div>';
+                }
+            }
+
+            async function getEndgameReflection() {
+                finalMessage.innerHTML = '<div class="loading"></div> Ładowanie podsumowania AI...';
+                
+                try {
+                    const prompt = `Gracz właśnie pokonał skomplikowany labirynt w ${moveCount} ruchach. Napisz krótkie, motywujące i uroczyste podsumowanie jego podróży. Pisz w języku polskim.`;
+                    const reflection = await getGeminiResponse(prompt);
+                    finalMessage.textContent = reflection;
+                } catch (error) {
+                    finalMessage.textContent = "🎉 Gratulacje za ukończenie labiryntu!";
+                }
+            }
+
+            // Event listeners
+            upButton.addEventListener('click', () => movePlayer('up'));
+            downButton.addEventListener('click', () => movePlayer('down'));
+            leftButton.addEventListener('click', () => movePlayer('left'));
+            rightButton.addEventListener('click', () => movePlayer('right'));
+            
+            window.addEventListener('keydown', (e) => {
+                switch (e.key) {
+                    case 'ArrowUp':
+                    case 'w':
+                    case 'W':
+                        movePlayer('up');
+                        break;
+                    case 'ArrowDown':
+                    case 's':
+                    case 'S':
+                        movePlayer('down');
+                        break;
+                    case 'ArrowLeft':
+                    case 'a':
+                    case 'A':
+                        movePlayer('left');
+                        break;
+                    case 'ArrowRight':
+                    case 'd':
+                    case 'D':
+                        movePlayer('right');
+                        break;
+                }
+            });
+
+            function resetGame() {
+                messageBox.classList.add('hidden');
+                hintBox.textContent = "";
+                generateMaze();
+                drawGame();
+                startGame();
+            }
+
+            restartButton.addEventListener('click', resetGame);
+            restartButtonInModal.addEventListener('click', resetGame);
+            hintButton.addEventListener('click', getHint);
+            reflectionButton.addEventListener('click', getEndgameReflection);
+            
+            // Initial setup
+            window.addEventListener('resize', resizeCanvas);
+            generateMaze();
+            resizeCanvas();
+            startGame();
+        });
+    </script>
+</body>
+</html>

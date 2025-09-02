@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Trattoria del Sole - autentyczna kuchnia włoska w Warszawie. Prawdziwe smaki Włoch: pizza, pasta, risotto i więcej. Rezerwacje online.">
+    <meta name="keywords" content="restauracja włoska, pizza, pasta, risotto, Warszawa, trattoria, kuchnia włoska, rezerwacje">
+    <meta name="author" content="Trattoria del Sole">
+    <meta property="og:title" content="Trattoria del Sole - Smaki Północnych Włoch">
+    <meta property="og:description" content="Autentyczna kuchnia włoska w sercu Warszawy">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://trattoria-del-sole.pl">
+    <title>Trattoria del Sole - Smaki Północnych Włoch | Warszawa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f7f3f0;
+        }
+        .hero-section {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('https://images.unsplash.com/photo-1544025162-d2780e0c034a?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+        }
+        .text-shadow-custom {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .animate-slide-in-left {
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        /* Hover effects */
+        .menu-item {
+            transition: all 0.3s ease;
+        }
+        
+        .menu-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+        
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 1s ease-in-out infinite;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+<body class="bg-[#f7f3f0] text-gray-800">
+
+    <!-- Navbar -->
+    <nav class="bg-white/80 backdrop-blur-sm fixed w-full z-50 shadow-md">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-2xl font-bold text-[#b45309] tracking-wider">Trattoria del Sole</a>
+            <div class="hidden md:flex space-x-6">
+                <a href="o nas.html" class="text-gray-700 hover:text-[#b45309] transition-colors">O nas</a>
+                <a href="Menu.html" class="text-gray-700 hover:text-[#b45309] transition-colors">Menu</a>
+                <a href="galeria.html" class="text-gray-700 hover:text-[#b45309] transition-colors">Galeria</a>
+                <a href="Kontakt.html" class="text-gray-700 hover:text-[#b45309] transition-colors">Kontakt</a>
+            </div>
+            <button class="hamburger md:hidden text-gray-700 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                </svg>
+            </button>
+        </div>
+        
+    <!-- Mobile Menu -->
+    <div class="mobile-menu fixed inset-0 bg-black bg-opacity-50 z-50 hidden">
+        <div class="bg-white h-full w-64 p-6">
+            <div class="flex justify-between items-center mb-8">
+                <span class="text-xl font-bold text-[#b45309]">Menu</span>
+                <button class="close-menu text-gray-500 hover:text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="space-y-4">
+                <a href="index.html" class="block text-gray-700 hover:text-[#b45309] transition-colors">Strona główna</a>
+                <a href="o nas.html" class="block text-gray-700 hover:text-[#b45309] transition-colors">O nas</a>
+                <a href="Menu.html" class="block text-gray-700 hover:text-[#b45309] transition-colors">Menu</a>
+                <a href="galeria.html" class="block text-gray-700 hover:text-[#b45309] transition-colors">Galeria</a>
+                <a href="Kontakt.html" class="block text-gray-700 hover:text-[#b45309] transition-colors">Kontakt</a>
+            </div>
+        </div>
+    </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero-section flex items-center justify-center text-center text-white">
+        <div class="p-6 md:p-10 bg-black/40 rounded-lg backdrop-blur-sm">
+            <h1 class="text-5xl md:text-7xl font-bold mb-4 tracking-tight text-shadow-custom">Trattoria del Sole</h1>
+            <p class="text-lg md:text-2xl mb-6 font-light text-shadow-custom">Prawdziwe smaki Włoch w sercu miasta</p>
+            <a href="#menu-categories" class="bg-[#b45309] hover:bg-[#92400e] text-white font-bold py-3 px-8 rounded-full shadow-lg transition-colors">
+                Zobacz Menu
+            </a>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl font-bold mb-4 text-[#b45309] animate-fade-in-up">O nas</h2>
+            <div class="max-w-3xl mx-auto">
+                <p class="text-lg leading-relaxed mb-4 animate-fade-in-up" style="animation-delay: 0.2s;">
+                    W Trattorii del Sole wierzymy, że jedzenie łączy ludzi. Nasza restauracja to hołd dla tradycyjnej kuchni włoskiej, opartej na prostych, ale najwyższej jakości składnikach. Codziennie rano przygotowujemy świeży makaron, a nasza pizza wypiekana jest w piecu opalanym drewnem, co nadaje jej niezapomniany aromat.
+                </p>
+                <p class="text-lg leading-relaxed animate-fade-in-up" style="animation-delay: 0.4s;">
+                    Każde danie to podróż do słonecznej Italii. Zapraszamy do wspólnego świętowania smaku i pasji, z jakimi tworzymy nasze potrawy.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="py-20 bg-[#f7f3f0]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-[#b45309]">Nasze Menu</h2>
+
+            <!-- Menu Categories with icons -->
+                            <div id="menu-categories" class="flex flex-wrap justify-center gap-4 md:gap-8 mb-12">
+                    <a href="#antipasti-section" class="menu-item flex flex-col items-center p-4 rounded-lg bg-white shadow-lg hover:bg-gray-100 transition-colors">
+                        <i class="fa-solid fa-utensils text-2xl text-[#b45309] mb-2"></i>
+                        <span class="text-sm font-semibold">Przystawki</span>
+                    </a>
+                    <a href="#pizza-section" class="menu-item flex flex-col items-center p-4 rounded-lg bg-white shadow-lg hover:bg-gray-100 transition-colors">
+                        <i class="fa-solid fa-pizza-slice text-2xl text-[#b45309] mb-2"></i>
+                        <span class="text-sm font-semibold">Pizza</span>
+                    </a>
+                    <a href="#salatki-section" class="menu-item flex flex-col items-center p-4 rounded-lg bg-white shadow-lg hover:bg-gray-100 transition-colors">
+                        <i class="fa-solid fa-leaf text-2xl text-[#b45309] mb-2"></i>
+                        <span class="text-sm font-semibold">Sałatki</span>
+                    </a>
+                    <a href="#dania-glowne-section" class="menu-item flex flex-col items-center p-4 rounded-lg bg-white shadow-lg hover:bg-gray-100 transition-colors">
+                        <i class="fa-solid fa-plate-wheat text-2xl text-[#b45309] mb-2"></i>
+                        <span class="text-sm font-semibold">Dania główne</span>
+                    </a>
+                    <a href="#zupy-section" class="menu-item flex flex-col items-center p-4 rounded-lg bg-white shadow-lg hover:bg-gray-100 transition-colors">
+                        <i class="fa-solid fa-bowl-food text-2xl text-[#b45309] mb-2"></i>
+                        <span class="text-sm font-semibold">Zupy</span>
+                    </a>
+                    <a href="#desery-section" class="menu-item flex flex-col items-center p-4 rounded-lg bg-white shadow-lg hover:bg-gray-100 transition-colors">
+                        <i class="fa-solid fa-ice-cream text-2xl text-[#b45309] mb-2"></i>
+                        <span class="text-sm font-semibold">Desery</span>
+                    </a>
+                    <a href="#napoje-section" class="menu-item flex flex-col items-center p-4 rounded-lg bg-white shadow-lg hover:bg-gray-100 transition-colors">
+                        <i class="fa-solid fa-mug-hot text-2xl text-[#b45309] mb-2"></i>
+                        <span class="text-sm font-semibold">Napoje</span>
+                    </a>
+                </div>
+
+            <!-- Category: Przystawki -->
+            <div id="antipasti-section">
+                <h3 class="text-2xl font-bold mb-6 text-[#92400e] border-b-2 border-[#b45309] pb-2">Przystawki</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center menu-item">
+                        <img src="https://images.unsplash.com/photo-1572442388796-11668a67e53d?q=80&w=400&h=300&fit=crop" alt="Bruschetta al Pomodoro" class="w-full h-48 object-cover rounded-md mb-4" loading="lazy">
+                        <h4 class="text-xl font-bold text-gray-900">Bruschetta al Pomodoro</h4>
+                        <p class="text-gray-600 my-2">Grzanki z pomidorami, bazylią i czosnkiem.</p>
+                        <span class="text-xl font-bold text-[#b45309]">25 zł</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Carpaccio" alt="Carpaccio" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Carpaccio di Manzo</h4>
+                        <p class="text-gray-600 my-2">Cienkie plasterki polędwicy wołowej z parmezanem.</p>
+                        <span class="text-xl font-bold text-[#b45309]">45 zł</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category: Pizza -->
+            <div id="pizza-section">
+                <h3 class="text-2xl font-bold mb-6 text-[#92400e] border-b-2 border-[#b45309] pb-2">Pizze</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Margherita" alt="Pizza Margherita" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Pizza Margherita</h4>
+                        <p class="text-gray-600 my-2">Sos pomidorowy, mozzarella, świeża bazylia.</p>
+                        <span class="text-xl font-bold text-[#b45309]">35 zł</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Prosciutto" alt="Pizza Prosciutto" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Pizza Prosciutto</h4>
+                        <p class="text-gray-600 my-2">Szynka parmeńska, rukola, pomidorki koktajlowe.</p>
+                        <span class="text-xl font-bold text-[#b45309]">42 zł</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Funghi" alt="Pizza Funghi" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Pizza Funghi</h4>
+                        <p class="text-gray-600 my-2">Sos pomidorowy, mozzarella, pieczarki, oliwki.</p>
+                        <span class="text-xl font-bold text-[#b45309]">38 zł</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Category: Sałatki -->
+            <div id="salatki-section">
+                <h3 class="text-2xl font-bold mb-6 mt-12 text-[#92400e] border-b-2 border-[#b45309] pb-2">Sałatki</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Caprese" alt="Sałatka Caprese" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Sałatka Caprese</h4>
+                        <p class="text-gray-600 my-2">Mozzarella, pomidory, świeża bazylia, oliwa.</p>
+                        <span class="text-xl font-bold text-[#b45309]">30 zł</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Rukola" alt="Sałatka z rukolą" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Sałatka z grillowanym kurczakiem</h4>
+                        <p class="text-gray-600 my-2">Mieszanka sałat, pomidorki, ogórek, grillowany kurczak, sos winegret.</p>
+                        <span class="text-xl font-bold text-[#b45309]">38 zł</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Category: Dania Główne -->
+            <div id="dania-glowne-section">
+                <h3 class="text-2xl font-bold mb-6 mt-12 text-[#92400e] border-b-2 border-[#b45309] pb-2">Dania Główne</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Lasagne" alt="Lasagne" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Lasagne al Forno</h4>
+                        <p class="text-gray-600 my-2">Klasyczne warstwy makaronu z sosem bolońskim i beszamelem, zapiekane w piecu.</p>
+                        <span class="text-xl font-bold text-[#b45309]">45 zł</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Risotto" alt="Risotto" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Risotto ai Funghi</h4>
+                        <p class="text-gray-600 my-2">Kremowe risotto z prawdziwkami i parmezanem.</p>
+                        <span class="text-xl font-bold text-[#b45309]">50 zł</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Gnocchi" alt="Gnocchi" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Gnocchi al Pesto</h4>
+                        <p class="text-gray-600 my-2">Włoskie kluseczki ziemniaczane z sosem pesto, orzeszkami piniowymi i parmezanem.</p>
+                        <span class="text-xl font-bold text-[#b45309]">42 zł</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category: Zupy -->
+            <div id="zupy-section">
+                <h3 class="text-2xl font-bold mb-6 mt-12 text-[#92400e] border-b-2 border-[#b45309] pb-2">Zupy</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Zupa" alt="Zupa Minestrone" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Minestrone</h4>
+                        <p class="text-gray-600 my-2">Tradycyjna zupa warzywna na bulionie z dodatkiem makaronu.</p>
+                        <span class="text-xl font-bold text-[#b45309]">20 zł</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Zupa" alt="Zupa pomidorowa" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Crema di Pomodoro</h4>
+                        <p class="text-gray-600 my-2">Kremowa zupa pomidorowa z bazyliowym pesto.</p>
+                        <span class="text-xl font-bold text-[#b45309]">22 zł</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category: Desery -->
+            <div id="desery-section">
+                <h3 class="text-2xl font-bold mb-6 mt-12 text-[#92400e] border-b-2 border-[#b45309] pb-2">Desery</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Tiramisu" alt="Tiramisu" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Tiramisu</h4>
+                        <p class="text-gray-600 my-2">Klasyczny włoski deser z biszkoptów nasączonych kawą i kremem z mascarpone.</p>
+                        <span class="text-xl font-bold text-[#b45309]">25 zł</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Panna%20Cotta" alt="Panna Cotta" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Panna Cotta</h4>
+                        <p class="text-gray-600 my-2">Delikatny deser z gotowanej śmietanki, podawany z sosem malinowym.</p>
+                        <span class="text-xl font-bold text-[#b45309]">22 zł</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Category: Napoje -->
+            <div id="napoje-section">
+                <h3 class="text-2xl font-bold mb-6 mt-12 text-[#92400e] border-b-2 border-[#b45309] pb-2">Napoje</h3>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Woda" alt="Woda" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Woda mineralna</h4>
+                        <p class="text-gray-600 my-2">Woda gazowana/niegazowana.</p>
+                        <span class="text-xl font-bold text-[#b45309]">8 zł</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Sok" alt="Sok" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Soki naturalne</h4>
+                        <p class="text-gray-600 my-2">Świeżo wyciskane soki z pomarańczy lub grejpfruta.</p>
+                        <span class="text-xl font-bold text-[#b45309]">15 zł</span>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-lg flex flex-col items-center text-center">
+                        <img src="https://placehold.co/400x300/a39393/ffffff?text=Espresso" alt="Kawa" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h4 class="text-xl font-bold text-gray-900">Kawa</h4>
+                        <p class="text-gray-600 my-2">Espresso, Cappuccino, Latte Macchiato.</p>
+                        <span class="text-xl font-bold text-[#b45309]">10-18 zł</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Gallery Preview Section -->
+    <section id="gallery" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-8 text-[#b45309]">Galeria</h2>
+            <p class="text-center text-gray-600 mb-12 max-w-2xl mx-auto">Zobacz atmosferę naszej restauracji, nasze pyszne dania i przytulne wnętrze. Kliknij poniżej, aby zobaczyć pełną galerię.</p>
+            
+            <!-- Gallery Preview Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-8">
+                <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500&h=350&fit=crop" alt="Wnętrze restauracji" class="w-full h-48 object-cover rounded-lg shadow-md hover:scale-105 transition-transform cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=500&h=350&fit=crop" alt="Pizza Margherita" class="w-full h-48 object-cover rounded-lg shadow-md hover:scale-105 transition-transform cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=500&h=350&fit=crop" alt="Bar w restauracji" class="w-full h-48 object-cover rounded-lg shadow-md hover:scale-105 transition-transform cursor-pointer">
+                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ca4b?w=500&h=350&fit=crop" alt="Tiramisu" class="w-full h-48 object-cover rounded-lg shadow-md hover:scale-105 transition-transform cursor-pointer">
+            </div>
+            
+            <!-- Call to Action -->
+            <div class="text-center">
+                <a href="galeria.html" class="inline-flex items-center bg-[#b45309] hover:bg-[#92400e] text-white font-bold py-3 px-8 rounded-full shadow-lg transition-colors">
+                    <i class="fa-solid fa-images mr-2"></i>
+                    Zobacz pełną galerię
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-[#b45309]">Co mówią nasi goście</h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-[#f7f3f0] p-6 rounded-lg shadow-lg text-center">
+                    <div class="text-yellow-400 text-2xl mb-4">★★★★★</div>
+                    <p class="text-gray-700 mb-4">"Najlepsza pizza w Warszawie! Świeże składniki i autentyczny włoski smak. Polecam!"</p>
+                    <p class="font-semibold text-[#b45309]">- Anna Kowalska</p>
+                </div>
+                <div class="bg-[#f7f3f0] p-6 rounded-lg shadow-lg text-center">
+                    <div class="text-yellow-400 text-2xl mb-4">★★★★★</div>
+                    <p class="text-gray-700 mb-4">"Atmosfera jak we Włoszech! Świetne jedzenie i miła obsługa. Na pewno wrócimy."</p>
+                    <p class="font-semibold text-[#b45309]">- Marek Nowak</p>
+                </div>
+                <div class="bg-[#f7f3f0] p-6 rounded-lg shadow-lg text-center">
+                    <div class="text-yellow-400 text-2xl mb-4">★★★★★</div>
+                    <p class="text-gray-700 mb-4">"Risotto ai Funghi to coś niesamowitego! Kremowe i aromatyczne. Polecam wszystkim."</p>
+                    <p class="font-semibold text-[#b45309]">- Katarzyna Wiśniewska</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-[#f7f3f0]">
+        <div class="container mx-auto px-4">
+            <h2 class="text-4xl font-bold text-center mb-12 text-[#b45309]">Kontakt & Rezerwacje</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <!-- Contact Info -->
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4 text-[#92400e]">Znajdź nas</h3>
+                    <p class="mb-2"><strong>Adres:</strong> Ul. Słoneczna 7, 00-001 Warszawa</p>
+                    <p class="mb-2"><strong>Telefon:</strong> <a href="tel:+48123456789" class="text-blue-600 hover:underline">+48 123 456 789</a></p>
+                    <p class="mb-4"><strong>E-mail:</strong> <a href="mailto:kontakt@trattoria-del-sole.pl" class="text-blue-600 hover:underline">kontakt@trattoria-del-sole.pl</a></p>
+                    <p class="mb-4"><strong>Godziny otwarcia:</strong></p>
+                    <ul class="list-disc list-inside">
+                        <li>Poniedziałek - Piątek: 12:00 - 22:00</li>
+                        <li>Sobota - Niedziela: 13:00 - 23:00</li>
+                    </ul>
+                    <div class="mt-6">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2540.354146039566!2d21.01175491572978!3d52.23414997975855!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471ecc669b3e1a0b%3A0x8f7d93a6e355c7a4!2sPa%C5%82ac%20Kultury%20i%20Nauki!5e0!3m2!1spl!2spl!4v1689254000000!5m2!1spl!2spl" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    </div>
+                </div>
+
+                <!-- Reservation Form -->
+                <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-2xl font-bold mb-4 text-[#92400e]">Zarezerwuj stolik</h3>
+                    <form id="reservation-form">
+                        <div class="mb-4">
+                            <label for="name" class="block text-gray-700 font-bold mb-2">Imię i nazwisko</label>
+                            <input type="text" id="name" name="name" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#b45309]" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-gray-700 font-bold mb-2">E-mail</label>
+                            <input type="email" id="email" name="email" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#b45309]" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="phone" class="block text-gray-700 font-bold mb-2">Telefon</label>
+                            <input type="tel" id="phone" name="phone" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#b45309]">
+                        </div>
+                        <div class="mb-4">
+                            <label for="date" class="block text-gray-700 font-bold mb-2">Data i godzina</label>
+                            <input type="datetime-local" id="date" name="date" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#b45309]" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="guests" class="block text-gray-700 font-bold mb-2">Liczba osób</label>
+                            <input type="number" id="guests" name="guests" min="1" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#b45309]" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="block text-gray-700 font-bold mb-2">Wiadomość (opcjonalnie)</label>
+                            <textarea id="message" name="message" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#b45309]"></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-[#b45309] hover:bg-[#92400e] text-white font-bold py-3 rounded-md shadow-lg transition-colors">
+                            Zarezerwuj
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#92400e] text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2024 Trattoria del Sole. Wszelkie prawa zastrzeżone.</p>
+            <div class="mt-4 flex justify-center space-x-4">
+                <!-- TUTAJ WKLEJ LINK DO SWOJEGO FACEBOOKA -->
+                <a href="https://facebook.com/trattoria-del-sole" class="hover:text-gray-200 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.25 8.5h-2.5v7h-2.5v-7h-1.25v-2h1.25v-1.5c0-1.25.75-2 2-2h1.5v2h-1c-.5 0-.5.25-.5.5v1h2.5l-.25 2z"/></svg>
+                </a>
+                <!-- TUTAJ WKLEJ LINK DO SWOJEGO INSTAGRAMA -->
+                <a href="https://instagram.com/trattoria-del-sole" class="hover:text-gray-200 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm3.5 8h-2.5v-1.5c0-.5.25-.75.75-.75h1.75v-2h-1.75c-1.25 0-2 .75-2 2v1.5h-2.5v2h2.5v6h2.5v-6h2.5l.25-2z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenu = document.querySelector('.mobile-menu');
+        const hamburger = document.querySelector('.hamburger');
+        const closeMenu = document.querySelector('.close-menu');
+
+        hamburger.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+        });
+
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+                // Close mobile menu after clicking
+                if (mobileMenu) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Form validation and submission
+        const reservationForm = document.querySelector('#reservation-form');
+        if (reservationForm) {
+            reservationForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const submitBtn = reservationForm.querySelector('button[type="submit"]');
+                const originalText = submitBtn.textContent;
+                
+                // Show loading state
+                submitBtn.textContent = 'Wysyłanie...';
+                submitBtn.disabled = true;
+                
+                try {
+                    // Simulate form submission (replace with actual backend)
+                    await new Promise(resolve => setTimeout(resolve, 2000));
+                    
+                    // Show success message
+                    alert('Dziękujemy! Twoja rezerwacja została wysłana. Skontaktujemy się z Tobą wkrótce.');
+                    reservationForm.reset();
+                } catch (error) {
+                    alert('Wystąpił błąd. Spróbuj ponownie później.');
+                } finally {
+                    // Reset button
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                }
+            });
+        }
+
+        // Lazy loading for images
+        const images = document.querySelectorAll('img[data-src]');
+        const imageObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    img.src = img.dataset.src;
+                    img.classList.remove('lazy');
+                    observer.unobserve(img);
+                }
+            });
+        });
+
+        images.forEach(img => imageObserver.observe(img));
+
+        // Add hover effects to menu items
+        document.querySelectorAll('.menu-item').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                item.style.transform = 'translateY(-5px)';
+            });
+            
+            item.addEventListener('mouseleave', () => {
+                item.style.transform = 'translateY(0)';
+            });
+        });
+    </script>
+</body>
+</html>

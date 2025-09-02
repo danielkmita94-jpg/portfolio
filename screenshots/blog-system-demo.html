@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Blog System - Zaawansowany system blogowy z pełnym stackiem technologicznym. PHP, MySQL, Tailwind CSS, Google OAuth.">
+    <meta name="keywords" content="blog system, php, mysql, tailwind css, google oauth, portfolio, web development">
+    <meta name="author" content="Daniel Kmita">
+    <meta property="og:title" content="Blog System - Demo Portfolio">
+    <meta property="og:description" content="Zaawansowany system blogowy z pełnym stackiem technologicznym">
+    <meta property="og:type" content="website">
+    <title>Blog System - Demo Portfolio | Daniel Kmita</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .tech-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 4px;
+        }
+        
+        .screenshot-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .screenshot-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .screenshot-container:hover .screenshot-overlay {
+            opacity: 1;
+        }
+        
+        .demo-button {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .stats-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stats-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stats-label {
+            color: #6b7280;
+            font-weight: 500;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in-up {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .animate-fade-in-up-delay-1 {
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+        
+        .animate-fade-in-up-delay-2 {
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+        
+        .animate-fade-in-up-delay-3 {
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-blog text-white text-sm"></i>
+                    </div>
+                    <span class="ml-3 text-xl font-bold text-gray-900">Blog System</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#features" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Funkcje</a>
+                    <a href="#screenshots" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Zrzuty ekranu</a>
+                    <a href="#tech" class="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium transition-colors">Technologie</a>
+                    <a href="#demo" class="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:from-blue-700 hover:to-purple-700 transition-all">Live Demo</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white pt-24 pb-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="animate-fade-in-up">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6">
+                    Blog System
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-blue-100 max-w-3xl mx-auto">
+                    Zaawansowany system blogowy z pełnym stackiem technologicznym - idealny projekt do portfolio
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="#demo" class="bg-white text-blue-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
+                        <i class="fas fa-play mr-2"></i>Uruchom Demo
+                    </a>
+                    <a href="https://github.com/danielkmita94-jpg/blog-system" target="_blank" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-blue-600 transition-colors">
+                        <i class="fab fa-github mr-2"></i>Kod źródłowy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="stats-card animate-fade-in-up">
+                    <div class="stats-number">15+</div>
+                    <div class="stats-label">Kontrolerów</div>
+                </div>
+                <div class="stats-card animate-fade-in-up-delay-1">
+                    <div class="stats-number">20+</div>
+                    <div class="stats-label">Modeli</div>
+                </div>
+                <div class="stats-card animate-fade-in-up-delay-2">
+                    <div class="stats-number">30+</div>
+                    <div class="stats-label">Widoków</div>
+                </div>
+                <div class="stats-card animate-fade-in-up-delay-3">
+                    <div class="stats-number">100%</div>
+                    <div class="stats-label">Responsywność</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Główne funkcjonalności</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Blog System to kompleksowe rozwiązanie łączące nowoczesne praktyki developmentu z solidnymi fundamentami backend development
+                </p>
+            </div>
+            
+            <div class="feature-grid">
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                    <div class="feature-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Zarządzanie użytkownikami</h3>
+                    <ul class="text-gray-600 space-y-2">
+                        <li>• Rejestracja i logowanie z walidacją</li>
+                        <li>• Role użytkowników (admin, author, user)</li>
+                        <li>• Weryfikacja email z tokenami</li>
+                        <li>• Google OAuth integration</li>
+                        <li>• Profile użytkowników z avatarem</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                    <div class="feature-icon">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Zarządzanie treścią</h3>
+                    <ul class="text-gray-600 space-y-2">
+                        <li>• Tworzenie i edycja postów</li>
+                        <li>• Rich text editor</li>
+                        <li>• Kategorie i tagi z kolorami</li>
+                        <li>• Status postów (draft, published)</li>
+                        <li>• SEO optimization</li>
+                        <li>• Image uploads z miniaturkami</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                    <div class="feature-icon">
+                        <i class="fas fa-comments"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">System komentarzy</h3>
+                    <ul class="text-gray-600 space-y-2">
+                        <li>• Dodawanie komentarzy</li>
+                        <li>• Moderacja komentarzy</li>
+                        <li>• Nested comments</li>
+                        <li>• Anti-spam protection</li>
+                        <li>• Rate limiting</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Panel administracyjny</h3>
+                    <ul class="text-gray-600 space-y-2">
+                        <li>• Dashboard z statystykami</li>
+                        <li>• Zarządzanie użytkownikami</li>
+                        <li>• Moderacja treści</li>
+                        <li>• Zarządzanie kategoriami</li>
+                        <li>• Ustawienia systemu</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                    <div class="feature-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Wyszukiwanie i filtrowanie</h3>
+                    <ul class="text-gray-600 space-y-2">
+                        <li>• Wyszukiwanie pełnotekstowe</li>
+                        <li>• Filtrowanie po kategoriach</li>
+                        <li>• Paginacja</li>
+                        <li>• Sortowanie</li>
+                        <li>• RSS feeds</li>
+                    </ul>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg card-hover">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Responsywność i UX</h3>
+                    <ul class="text-gray-600 space-y-2">
+                        <li>• Mobile-first design</li>
+                        <li>• Tailwind CSS</li>
+                        <li>• Progressive enhancement</li>
+                        <li>• Accessibility</li>
+                        <li>• Loading states</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section id="screenshots" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Zrzuty ekranu projektu</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Zobacz jak wygląda Blog System w działaniu - od strony głównej po zaawansowane funkcje administracyjne
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="screenshot-container">
+                    <img src="blog-system-screenshots/Strona główna - Blog System.png" alt="Strona główna" class="w-full h-auto">
+                    <div class="screenshot-overlay">
+                        <div class="text-center text-white">
+                            <h3 class="text-xl font-bold mb-2">Strona główna</h3>
+                            <p class="text-sm">Hero section, wyróżnione artykuły, kategorie</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-container">
+                    <img src="blog-system-screenshots/Panel administratora.png" alt="Panel administratora" class="w-full h-auto">
+                    <div class="screenshot-overlay">
+                        <div class="text-center text-white">
+                            <h3 class="text-xl font-bold mb-2">Panel administratora</h3>
+                            <p class="text-sm">Dashboard, statystyki, zarządzanie</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-container">
+                    <img src="blog-system-screenshots/Zarządzanie artykułami.png" alt="Zarządzanie artykułami" class="w-full h-auto">
+                    <div class="screenshot-overlay">
+                        <div class="text-center text-white">
+                            <h3 class="text-xl font-bold mb-2">Zarządzanie artykułami</h3>
+                            <p class="text-sm">CRUD, edycja, publikacja</p>
+                        </div>
+                    </div>
+                </div>
+                
+
+                
+                <div class="screenshot-container">
+                    <img src="blog-system-screenshots/Menu Kontakt.png" alt="Menu kontakt" class="w-full h-auto">
+                    <div class="screenshot-overlay">
+                        <div class="text-center text-white">
+                            <h3 class="text-xl font-bold mb-2">Menu kontakt</h3>
+                            <p class="text-sm">Formularz kontaktowy</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="screenshot-container">
+                    <img src="blog-system-screenshots/rozwijane menu.png" alt="Menu rozwijane" class="w-full h-auto">
+                    <div class="screenshot-overlay">
+                        <div class="text-center text-white">
+                            <h3 class="text-xl font-bold mb-2">Menu rozwijane</h3>
+                            <p class="text-sm">Nawigacja kategorii</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Stack Section -->
+    <section id="tech" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Stack technologiczny</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                    Blog System wykorzystuje najnowsze technologie i najlepsze praktyki developmentu
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="text-center">
+                        <i class="fab fa-php text-6xl text-blue-600 mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Backend</h3>
+                        <p class="text-gray-600 mb-4">PHP 8.0+, MVC Architecture, Clean Code</p>
+                        <div class="space-y-2">
+                            <div class="tech-badge">PHP 8.0+</div>
+                            <div class="tech-badge">MVC Pattern</div>
+                            <div class="tech-badge">OOP</div>
+                            <div class="tech-badge">Composer</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="text-center">
+                        <i class="fas fa-database text-6xl text-green-600 mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Baza danych</h3>
+                        <p class="text-gray-600 mb-4">MySQL 8.0, zaawansowane zapytania, caching</p>
+                        <div class="space-y-2">
+                            <div class="tech-badge">MySQL 8.0</div>
+                            <div class="tech-badge">SQL</div>
+                            <div class="tech-badge">Caching</div>
+                            <div class="tech-badge">Migrations</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="text-center">
+                        <i class="fab fa-js-square text-6xl text-yellow-500 mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Frontend</h3>
+                        <p class="text-gray-600 mb-4">Tailwind CSS, JavaScript, Responsive Design</p>
+                        <div class="space-y-2">
+                            <div class="tech-badge">Tailwind CSS</div>
+                            <div class="tech-badge">JavaScript ES6+</div>
+                            <div class="tech-badge">Responsive</div>
+                            <div class="tech-badge">Accessibility</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="text-center">
+                        <i class="fas fa-shield-alt text-6xl text-red-600 mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Bezpieczeństwo</h3>
+                        <p class="text-gray-600 mb-4">Authentication, Authorization, Validation</p>
+                        <div class="space-y-2">
+                            <div class="tech-badge">CSRF Protection</div>
+                            <div class="tech-badge">SQL Injection</div>
+                            <div class="tech-badge">XSS Protection</div>
+                            <div class="tech-badge">Rate Limiting</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="text-center">
+                        <i class="fab fa-google text-6xl text-blue-500 mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">Integracje</h3>
+                        <p class="text-gray-600 mb-4">Google OAuth, Email, API</p>
+                        <div class="space-y-2">
+                            <div class="tech-badge">Google OAuth</div>
+                            <div class="tech-badge">Email SMTP</div>
+                            <div class="tech-badge">REST API</div>
+                            <div class="tech-badge">RSS Feeds</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white p-8 rounded-xl shadow-lg">
+                    <div class="text-center">
+                        <i class="fas fa-rocket text-6xl text-purple-600 mb-4"></i>
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">DevOps</h3>
+                        <p class="text-gray-600 mb-4">Docker, Testing, Monitoring</p>
+                        <div class="space-y-2">
+                            <div class="tech-badge">Docker</div>
+                            <div class="tech-badge">PHPUnit</div>
+                            <div class="tech-badge">Monitoring</div>
+                            <div class="tech-badge">CI/CD</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Demo Section -->
+    <section id="demo" class="py-20 bg-gradient-to-r from-blue-600 to-purple-600 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl font-bold mb-6">Uruchom live demo</h2>
+            <p class="text-xl mb-8 text-blue-100 max-w-3xl mx-auto">
+                Blog System jest gotowy do testowania! Uruchom lokalnie lub sprawdź kod źródłowy
+            </p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-white/10 backdrop-blur-sm p-8 rounded-xl border border-white/20">
+                    <h3 class="text-2xl font-bold mb-4">Lokalne uruchomienie</h3>
+                    <p class="text-blue-100 mb-6">Uruchom projekt na swoim komputerze</p>
+                    <div class="space-y-3 text-left text-sm">
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-3"></i>
+                            <span>XAMPP (Apache + MySQL)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-3"></i>
+                            <span>PHP 8.0+</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-3"></i>
+                            <span>MySQL 8.0+</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle text-green-400 mr-3"></i>
+                            <span>Composer</span>
+                        </div>
+                    </div>
+                    <a href="http://localhost/BlogSystem/public/" target="_blank" class="demo-button mt-6">
+                        <i class="fas fa-external-link-alt mr-2"></i>Uruchom lokalnie
+                    </a>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm p-8 rounded-xl border border-white/20">
+                    <h3 class="text-2xl font-bold mb-4">Kod źródłowy</h3>
+                    <p class="text-blue-100 mb-6">Zobacz jak jest zbudowany projekt</p>
+                    <div class="space-y-3 text-left text-sm">
+                        <div class="flex items-center">
+                            <i class="fas fa-code text-blue-400 mr-3"></i>
+                            <span>MVC Architecture</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-code text-blue-400 mr-3"></i>
+                            <span>Clean Code</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-code text-blue-400 mr-3"></i>
+                            <span>Documentation</span>
+                        </div>
+                        <div class="flex items-center">
+                            <i class="fas fa-code text-blue-400 mr-3"></i>
+                            <span>Tests</span>
+                        </div>
+                    </div>
+                    <a href="https://github.com/danielkmita94-jpg/blog-system" target="_blank" class="demo-button mt-6">
+                        <i class="fab fa-github mr-2"></i>GitHub Repository
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mt-12 bg-white/10 backdrop-blur-sm p-8 rounded-xl border border-white/20 max-w-4xl mx-auto">
+                <h3 class="text-2xl font-bold mb-4">Szybki start</h3>
+                <div class="text-left text-sm space-y-2">
+                    <div class="bg-gray-900 p-4 rounded-lg font-mono text-green-400">
+                        <div># Klonuj repository</div>
+                        <div>git clone https://github.com/danielkmita94-jpg/blog-system.git</div>
+                        <div>cd blog-system</div>
+                        <div></div>
+                        <div># Zainstaluj zależności</div>
+                        <div>composer install</div>
+                        <div></div>
+                        <div># Skopiuj .env.example do .env i skonfiguruj</div>
+                        <div>cp env.example .env</div>
+                        <div></div>
+                        <div># Uruchom w XAMPP</div>
+                        <div># Otwórz: http://localhost/blog-system/public/</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Blog System</h3>
+                    <p class="text-gray-400">
+                        Zaawansowany system blogowy demonstrujący profesjonalne umiejętności programistyczne.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Technologie</h3>
+                    <div class="space-y-2 text-gray-400">
+                        <div>PHP 8.0+</div>
+                        <div>MySQL 8.0</div>
+                        <div>Tailwind CSS</div>
+                        <div>Google OAuth</div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Linki</h3>
+                    <div class="space-y-2">
+                        <a href="https://github.com/danielkmita94-jpg/blog-system" target="_blank" class="text-gray-400 hover:text-white transition-colors block">
+                            <i class="fab fa-github mr-2"></i>GitHub
+                        </a>
+                        <a href="http://localhost/BlogSystem/public/" target="_blank" class="text-gray-400 hover:text-white transition-colors block">
+                            <i class="fas fa-external-link-alt mr-2"></i>Live Demo
+                        </a>
+                        <a href="blog-system-demo.md" class="text-gray-400 hover:text-white transition-colors block">
+                            <i class="fas fa-file-alt mr-2"></i>Dokumentacja
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
+                <p>&copy; 2024 Daniel Kmita. Blog System - Portfolio Project.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards for animation
+        document.querySelectorAll('.card-hover').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Add hover effects to demo buttons
+        document.querySelectorAll('.demo-button').forEach(button => {
+            button.addEventListener('mouseenter', () => {
+                button.style.transform = 'translateY(-2px)';
+            });
+            
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add click effect to screenshot containers
+        document.querySelectorAll('.screenshot-container').forEach(container => {
+            container.addEventListener('click', () => {
+                const img = container.querySelector('img');
+                if (img) {
+                    // Open image in new tab
+                    window.open(img.src, '_blank');
+                }
+            });
+        });
+
+        // Add loading animation
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add scroll effect to navigation
+            window.addEventListener('scroll', () => {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 100) {
+                    nav.classList.add('bg-white/95', 'backdrop-blur-sm');
+                } else {
+                    nav.classList.remove('bg-white/95', 'backdrop-blur-sm');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
