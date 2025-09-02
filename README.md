@@ -1,13 +1,9 @@
-<<<<<<< HEAD
 # Daniel Kmita - Full-Stack Developer
 
 ## 🚀 O mnie
 Full-Stack Developer z **3+ latami doświadczenia** w tworzeniu aplikacji webowych.
 Specjalizuję się w PHP, MySQL i nowoczesnym frontend development.
 Pasjonat clean code, MVC architecture i responsive design.
-
-## 💰 Stawka godzinowa
-**$25-35 USD/godz** - dostępny na projekty freelance i długoterminowe kontrakty.
 
 ## 🛠️ Technologie
 
@@ -29,22 +25,22 @@ Pasjonat clean code, MVC architecture i responsive design.
 
 ## 🎯 Projekty
 
-### [Blog System - Full-Stack Web Application](./projects/blog-system.md)
+### [Blog System - Full-Stack Web Application](./projects/blog-system-demo.html)
 **Technologie:** PHP 8.0+, MySQL, JavaScript ES6+, Tailwind CSS  
 **Funkcje:** Google OAuth, real-time likes, system komentarzy, panel administracyjny  
 **Status:** ✅ Ukończony z Google OAuth
 
-### [Invoice Management System](./projects/invoice-system.md)
+### [Invoice Management System](./projects/invoice-system-demo.html)
 **Technologie:** PHP, MySQL, JavaScript, CSS  
 **Funkcje:** Generowanie faktur, zarządzanie klientami, raporty biznesowe  
 **Status:** ✅ Ukończony
 
-### [Game Development Project](./projects/game-development.md)
+### [Game Development Project](./projects/game-dot-catching-demo.html)
 **Technologie:** JavaScript, HTML5 Canvas, CSS3  
 **Funkcje:** Custom engine, interaktywne mechaniki, system punktacji  
 **Status:** ✅ Ukończony
 
-### [Modern Website Development](./projects/modern-websites.md)
+### [Modern Website Development](./projects/modern-website-demo.html)
 **Technologie:** HTML5, CSS3, JavaScript, Responsive Design  
 **Funkcje:** Mobile-first approach, SEO optimization, accessibility  
 **Status:** ✅ Ukończony
@@ -80,7 +76,6 @@ Pasjonat clean code, MVC architecture i responsive design.
 - **LinkedIn:** [Daniel Kmita](https://www.linkedin.com/in/daniel-kmita-22b9a2381/)
 - **GitHub:** [@danielkmita94-jpg](https://github.com/danielkmita94-jpg)
 - **Telefon:** +48 605 982 926
-- **Stawka:** $25-35 USD/godz
 
 ## 🚀 Dostępność
 - **Formy zatrudnienia:** Pełny etat, Niepełny etat, Umowa zlecenie
@@ -91,8 +86,4 @@ Pasjonat clean code, MVC architecture i responsive design.
 
 **"Tworzę aplikacje webowe, które łączą funkcjonalność z elegancją"** ✨
 
-*Ostatnia aktualizacja: Wrzesień 2025*
-=======
-# portfolio
-My professional portfolio showcasing web development, game development, and desktop applications.
->>>>>>> 04383560387900f39f1af8f8ab9c86555d51af05
+*Ostatnia aktualizacja: Grudzień 2024*
