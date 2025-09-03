@@ -82,6 +82,12 @@ Pasjonat clean code, MVC architecture i responsive design.
 - **Data rozpoczęcia:** Do uzgodnienia
 - **Status:** Aktywnie szukam nowych projektów
 
+## 🎯 **Gotowy na nowe wyzwania!**
+
+[![Hire Me](https://img.shields.io/badge/Hire_Me-Full_Stack_Developer-00D4AA?style=for-the-badge&logo=github&logoColor=white)](mailto:daniel.kmita94@gmail.com)
+
+**Dostępny na projekty freelance i długoterminowe kontrakty!** 🚀
+
 ---
 
 **"Tworzę aplikacje webowe, które łączą funkcjonalność z elegancją"** ✨
